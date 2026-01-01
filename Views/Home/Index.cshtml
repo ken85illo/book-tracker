@@ -1,6 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.IdentityModel.Tokens
+@{
+ViewData["Title"] = "Home Page";
 }
+
+@model BookTracker.Models.BookViewModel;
 
 <div class="container">
     <div class="row g-3 mb-5">
@@ -170,7 +173,9 @@
 
 
     <div class="row g-4">
-        <div class="col-12 d-none">
+        @if (Model.Books.IsNullOrEmpty())
+        {
+        <div class="col-12 ">
             <div class="shelf-empty-ctr bg-white d-flex flex-column justify-content-center align-items-center p-5 mt-4">
                 <div class="circle-book-logo rounded-circle mb-2">
                     <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -199,17 +204,24 @@
                     your
                     reading progress.</div>
 
-                <button type="button" class="px-5 py-3 fw-bolder" tabindex="-1">Add Your First Book</button>
+                <button type="button" class="px-5 py-3 fw-bolder" data-bs-toggle="modal" data-bs-target="#formModal">Add
+                    Your First Book</button>
             </div>
         </div>
+        }
 
+
+
+        @foreach (var book in Model.Books)
+        {
         <div class="col-12 col-sm-6 col-xl-3">
             <div class="info-div bg-white py-4 px-4">
+
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="lh-md">
-                        <span class="outfit-font fs-5 fw-bolder">Test </span>
+                        <span class="outfit-font fs-5 fw-bolder">@book.Title</span>
                         <br>
-                        <span class="fs-6 fw-bold text-purple">test</span>
+                        <span class="fs-6 fw-bold text-purple">@book.Author</span>
                     </div>
 
                     <label class="mb-2">
@@ -251,7 +263,7 @@
                                 </path>
                             </g>
                         </svg>
-                        <span>2026</span>
+                        <span>@book.Year</span>
                     </div>
                     <div class="fs-7 fw-bolder text-grey info-card-data px-3 py-1 d-flex align-items-center">
                         <svg class="me-1" id="book-logo" viewBox="0 -0.5 25 25" fill="none"
@@ -272,14 +284,14 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <span>0 PAGES</span>
+                        <span>@book.TotalPages PAGES</span>
                     </div>
                 </div>
 
                 <div class="px-1">
                     <div class=" mt-4 d-flex justify-content-between">
                         <div class="text-grey fw-bold fs-6">PROGRESS</div>
-                        <div class="text-black fw-bold fs-6">0 OF 0</div>
+                        <div class="text-black fw-bold fs-6">@book.PagesRead OF @book.TotalPages</div>
                     </div>
 
                     <div class="progress mt-2 mb-4">
@@ -289,13 +301,14 @@
 
 
                     <div class="fs-7 fw-bolder text-grey mb-4">
-                        <div>Description</div>
+                        <div>@book.Description</div>
                     </div>
 
                     <div class="d-flex gap-1 justify-content-center align-items-stretch">
                         <div class="edit-btn-ctr flex-grow-1">
                             <button type="button" data-bs-toggle="modal" data-bs-target="#formModal"
-                                class="btn  py-2 btn-dark h-100 fs-6 fw-bold w-100 d-flex align-items-center justify-content-center gap-2">
+                                class="edit-btn btn py-2 btn-dark h-100 fs-6 fw-bold w-100 d-flex align-items-center justify-content-center gap-2"
+                                data-id="@book.Id">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -320,8 +333,8 @@
                             </button>
                         </div>
                         <div class="delete-btn-ctr">
-                            <button type="button"
-                                class="btn py-2 px-2 d-flex justify-content-center align-items-center">
+                            <a type="button" class="btn py-2 px-2 d-flex justify-content-center align-items-center"
+                                asp-action="Delete" asp-route-id="@book.Id">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -339,15 +352,18 @@
                                             stroke="#000000" stroke-linejoin="round"></path>
                                     </g>
                                 </svg>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-
+                <div class="fs-8 fw-bolder text-success mt-3 text-nowrap overflow-hidden">
+                    <div>Id: @book.Id</div>
+                </div>
             </div>
 
         </div>
+        }
     </div>
 </div>
 
@@ -355,42 +371,46 @@
     <div class="modal-lg modal-dialog modal-dialog-centered">
         <div class="modal-content px-3 py-2">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-4 fw-bolder outfit-font" id="exampleModalLabel">Update Entry</h1>
+                <h1 class="modal-title fs-4 fw-bolder outfit-font" id="exampleModalLabel">Book Entry</h1>
             </div>
             <div class="modal-body">
 
-                <form>
+                <form id="bookForm" method="post">
+                    <input type="hidden" asp-for="NewBook.Id" id="book-id" />
                     <div class="d-flex gap-4 mb-3">
                         <div class="flex-grow-1">
                             <label for="book-title" class="form-label text-darkgrey fw-bolder fs-6">TITLE</label>
-                            <input placeholder="Song Of Ice and Fire" type="text"
-                                class="form-control outfit-font  text-input px-4 py-3" id="book-title">
+                            <input required placeholder="Song Of Ice and Fire" type="text"
+                                class="form-control outfit-font  text-input px-4 py-3" id="book-title"
+                                asp-for="NewBook.Title">
                         </div>
                         <div class="flex-grow-1">
                             <label for="book-author" class="form-label text-darkgrey fw-bolder fs-6 ">AUTHOR</label>
-                            <input placeholder="George R.R. Martin" type="text"
-                                class="form-control outfit-font  text-input px-4 py-3" id="book-author">
+                            <input required placeholder="George R.R. Martin" type="text"
+                                class="form-control outfit-font  text-input px-4 py-3" id="book-author"
+                                asp-for="NewBook.Author">
                         </div>
                     </div>
                     <div class="d-flex gap-4 mb-3">
                         <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
                             <label for="publish-year" class="form-label text-darkgrey fw-bolder fs-6">PUBLISH
                                 YEAR</label>
-                            <input type="number" id="publish-year" name="PublishYear" min="1000" max="2026"
-                                class="form-control outfit-font  text-input px-4 py-3" placeholder="Enter a year">
+                            <input required type="number" id="publish-year" min="1000" max="2026" value="2026"
+                                class="form-control outfit-font  text-input px-4 py-3" placeholder="Enter a year"
+                                asp-for="NewBook.Year">
                         </div>
 
                         <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
                             <label for="total-pages" class="form-label text-darkgrey fw-bolder fs-6">TOTAL PAGES</label>
-                            <input type="number" min="0" value="0"
+                            <input required type="number" min="0" value="0"
                                 class="form-control outfit-font  text-input px-4 py-3" id="total-pages"
-                                placeholder="Enter a number">
+                                placeholder="Enter a number" asp-for="NewBook.TotalPages">
                         </div>
                         <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
                             <label for="pages-read" class="form-label text-darkgrey fw-bolder fs-6">PAGES READ</label>
-                            <input type="number" min="0" value="0"
+                            <input required type="number" min="0" value="0"
                                 class="form-control outfit-font  text-input px-4 py-3" id="pages-read"
-                                placeholder="Enter a number">
+                                placeholder="Enter a number" asp-for="NewBook.PagesRead">
                         </div>
                     </div>
 
@@ -398,8 +418,8 @@
                     <div class="mb-4">
                         <label for="synopsis" class="text-darkgrey fw-bolder fs-6">SYNOPSIS</label>
                         <textarea class="mt-1 form-control outfit-font  text-input px-4 py-3"
-                            placeholder="Record a brief summary..." id="synopsis"
-                            style="height: 100px; resize: none;"></textarea>
+                            placeholder="Record a brief summary..." id="synopsis" style="height: 100px; resize: none;"
+                            asp-for="NewBook.Description"></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between gap-5 align-items-center checkbox-ctr px-4 py-3 mb-4">
@@ -414,15 +434,16 @@
                                 role="switch" id="read-switch" style="position:relative; right: -10px">
                         </div>
                     </div>
-
                 </form>
+
             </div>
             <div class="modal-footer border-top-0 justify-content-center mb-3">
-                <button type="button" class="py-3 border-0 cancel-btn btn btn-secondary flex-grow-1 flex-shrink-1"
+                <button type="button"
+                    class="fw-bold py-3 border-0 cancel-btn btn btn-secondary flex-grow-1 flex-shrink-1"
                     style="flex-basis: 0;" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="py-3 update-record-btn btn btn-dark btn-primary flex-grow-1 flex-shrink-1"
-                    style="flex-basis: 0;">Update
-                    Record</button>
+                <button type="submit" form="bookForm"
+                    class="fw-bold py-3 update-record-btn btn btn-dark btn-primary flex-grow-1 flex-shrink-1"
+                    style="flex-basis: 0;">Submit Record</button>
             </div>
         </div>
     </div>

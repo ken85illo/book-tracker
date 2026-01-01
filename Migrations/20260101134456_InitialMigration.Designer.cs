@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251231102631_InitialMigration")]
+    [Migration("20260101134456_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -36,10 +36,8 @@ namespace BookTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Finished")
-                        .HasColumnType("bit");
 
                     b.Property<int>("PagesRead")
                         .HasColumnType("int");

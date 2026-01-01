@@ -355,15 +355,16 @@ body {
 }
 
 .delete-btn-ctr {
-    button {
+    a {
+        border-radius: var(--border-radius-rem);
         box-sizing: content-box !important;
     }
 
-    button:hover {
+    a:hover {
         background-color: rgba(255, 0, 0, 0.2) !important;
     }
 
-    button:active {
+    a:active {
         background-color: rgba(255, 0, 0, 0.4) !important;
     }
 

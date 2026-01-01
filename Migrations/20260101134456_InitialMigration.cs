@@ -21,8 +21,7 @@ namespace BookTracker.Migrations
                     Year = table.Column<int>(type: "int", nullable: false),
                     TotalPages = table.Column<int>(type: "int", nullable: false),
                     PagesRead = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Finished = table.Column<bool>(type: "bit", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

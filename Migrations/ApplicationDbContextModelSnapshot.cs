@@ -33,10 +33,8 @@ namespace BookTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Finished")
-                        .HasColumnType("bit");
 
                     b.Property<int>("PagesRead")
                         .HasColumnType("int");
