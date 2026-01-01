@@ -278,7 +278,6 @@ body {
 
 #read-check-ctr {
     display: inline-block;
-    cursor: pointer;
     --size: 3.5rem;
 
     height: var(--size) !important;

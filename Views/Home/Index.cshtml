@@ -5,6 +5,21 @@ ViewData["Title"] = "Home Page";
 
 @model BookTracker.Models.BookViewModel;
 
+@{
+int finished = 0;
+int pageCount = 0;
+int pagesRead = 0;
+foreach (var book in Model.Books)
+{
+if (book.TotalPages == book.PagesRead)
+{
+finished++;
+}
+pageCount += book.TotalPages;
+pagesRead += book.PagesRead;
+}
+}
+
 <div class="container">
     <div class="row g-3 mb-5">
         <div class="col-12 col-sm-6 col-xl-3">
@@ -24,7 +39,7 @@ ViewData["Title"] = "Home Page";
                     </div>
                 </div>
                 <div>
-                    <div class="outfit-font fw-bolder fs-2">0</div>
+                    <div class="outfit-font fw-bolder fs-2">@Model.Books.Count</div>
                     <div class="fs-6 text-grey fw-bold">TOTAL BOOKS</div>
                     <div class="fs-7 text-grey ">In Collection</div>
                 </div>
@@ -49,8 +64,12 @@ ViewData["Title"] = "Home Page";
                         </svg>
                     </div>
                 </div>
+
+
                 <div>
-                    <div class="outfit-font fw-bolder fs-2">0</div>
+                    <div class="outfit-font fw-bolder fs-2">
+                        @finished
+                    </div>
                     <div class="fs-6 text-grey fw-bold">FINISHED</div>
                     <div class="fs-7 text-grey ">Read Completely</div>
                 </div>
@@ -106,7 +125,7 @@ ViewData["Title"] = "Home Page";
                         </svg></div>
                 </div>
                 <div>
-                    <div class="outfit-font fw-bolder fs-2">0</div>
+                    <div class="outfit-font fw-bolder fs-2">@pageCount</div>
                     <div class="fs-6 text-grey fw-bold">PAGE COUNT</div>
                     <div class="fs-7 text-grey ">Cumulative Library</div>
                 </div>
@@ -140,7 +159,7 @@ ViewData["Title"] = "Home Page";
                         </svg></div>
                 </div>
                 <div>
-                    <div class="outfit-font fw-bolder fs-2">0</div>
+                    <div class="outfit-font fw-bolder fs-2">@pagesRead</div>
                     <div class="fs-6 text-grey fw-bold">PAGES READ</div>
                     <div class="fs-7 text-grey ">Lifetime Progress</div>
                 </div>
@@ -158,14 +177,14 @@ ViewData["Title"] = "Home Page";
 
         <div class="d-flex justify-content-center btn-group-wrp px-3 py-1">
             <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary fs-6" for="btnradio1">All</label>
+                <input type="radio" class="btn-check" name="btnradio" id="all" autocomplete="off" checked>
+                <label class="btn btn-outline-primary fs-6" for="all">All</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">Read</label>
+                <input type="radio" class="btn-check" name="btnradio" id="read" autocomplete="off">
+                <label class="btn btn-outline-primary" for="read">Read</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio3">Unread</label>
+                <input type="radio" class="btn-check" name="btnradio" id="unread" autocomplete="off">
+                <label class="btn btn-outline-primary" for="unread">Unread</label>
             </div>
         </div>
 
@@ -214,18 +233,19 @@ ViewData["Title"] = "Home Page";
 
         @foreach (var book in Model.Books)
         {
-        <div class="col-12 col-sm-6 col-xl-3">
+        <div class="book-card col-12 col-sm-6 col-xl-3">
             <div class="info-div bg-white py-4 px-4">
 
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="lh-md">
-                        <span class="outfit-font fs-5 fw-bolder">@book.Title</span>
+                        <span class="title-display outfit-font fs-5 fw-bolder">@book.Title</span>
                         <br>
-                        <span class="fs-6 fw-bold text-purple">@book.Author</span>
+                        <span class="author-display fs-6 fw-bold text-purple">@book.Author</span>
                     </div>
 
                     <label class="mb-2">
-                        <input type="checkbox" id="read-checkbox">
+                        <input disabled type="checkbox" id="read-checkbox" @(book.PagesRead==book.TotalPages ? "checked"
+                            : "" )>
                         <span id="read-check-ctr"
                             class="rounded-circle d-flex align-items-center justify-content-center">
                             <svg id="clock-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -294,9 +314,13 @@ ViewData["Title"] = "Home Page";
                         <div class="text-black fw-bold fs-6">@book.PagesRead OF @book.TotalPages</div>
                     </div>
 
+                    @{
+                    int percentage = (int)(book.PagesRead / (float)book.TotalPages * 100);
+                    }
+
                     <div class="progress mt-2 mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" role="progressbar" style="width: @percentage%;"
+                            aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100">@percentage%</div>
                     </div>
 
 
@@ -311,7 +335,8 @@ ViewData["Title"] = "Home Page";
                                 data-id="@book.Id">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
                                     <g id="SVGRepo_iconCarrier">
                                         <title></title>
                                         <g id="Complete">
@@ -337,7 +362,8 @@ ViewData["Title"] = "Home Page";
                                 asp-action="Delete" asp-route-id="@book.Id">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
                                     <g id="SVGRepo_iconCarrier">
                                         <path d="M5 7.5H19L18 21H6L5 7.5Z" stroke="#000000" stroke-linejoin="round">
                                         </path>
@@ -402,7 +428,7 @@ ViewData["Title"] = "Home Page";
 
                         <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
                             <label for="total-pages" class="form-label text-darkgrey fw-bolder fs-6">TOTAL PAGES</label>
-                            <input required type="number" min="0" value="0"
+                            <input required type="number" min="1" value="1"
                                 class="form-control outfit-font  text-input px-4 py-3" id="total-pages"
                                 placeholder="Enter a number" asp-for="NewBook.TotalPages">
                         </div>
