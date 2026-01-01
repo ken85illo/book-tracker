@@ -351,19 +351,78 @@
     </div>
 </div>
 
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Entry</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade w-100" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-lg modal-dialog modal-dialog-centered">
+        <div class="modal-content px-3 py-2">
+            <div class="modal-header border-bottom-0">
+                <h1 class="modal-title fs-4 fw-bolder outfit-font" id="exampleModalLabel">Update Entry</h1>
             </div>
             <div class="modal-body">
 
+                <form>
+                    <div class="d-flex gap-4 mb-3">
+                        <div class="flex-grow-1">
+                            <label for="book-title" class="form-label text-darkgrey fw-bolder fs-6">TITLE</label>
+                            <input placeholder="Song Of Ice and Fire" type="text"
+                                class="form-control outfit-font  text-input px-4 py-3" id="book-title">
+                        </div>
+                        <div class="flex-grow-1">
+                            <label for="book-author" class="form-label text-darkgrey fw-bolder fs-6 ">AUTHOR</label>
+                            <input placeholder="George R.R. Martin" type="text"
+                                class="form-control outfit-font  text-input px-4 py-3" id="book-author">
+                        </div>
+                    </div>
+                    <div class="d-flex gap-4 mb-3">
+                        <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
+                            <label for="publish-year" class="form-label text-darkgrey fw-bolder fs-6">PUBLISH
+                                YEAR</label>
+                            <input type="number" id="publish-year" name="PublishYear" min="1000" max="2026"
+                                class="form-control outfit-font  text-input px-4 py-3" placeholder="Enter a year">
+                        </div>
+
+                        <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
+                            <label for="total-pages" class="form-label text-darkgrey fw-bolder fs-6">TOTAL PAGES</label>
+                            <input type="number" min="0" value="0"
+                                class="form-control outfit-font  text-input px-4 py-3" id="total-pages"
+                                placeholder="Enter a number">
+                        </div>
+                        <div class="flex-grow-1 flex-shrink-1" style="flex-basis: 0;">
+                            <label for="pages-read" class="form-label text-darkgrey fw-bolder fs-6">PAGES READ</label>
+                            <input type="number" min="0" value="0"
+                                class="form-control outfit-font  text-input px-4 py-3" id="pages-read"
+                                placeholder="Enter a number">
+                        </div>
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label for="synopsis" class="text-darkgrey fw-bolder fs-6">SYNOPSIS</label>
+                        <textarea class="mt-1 form-control outfit-font  text-input px-4 py-3"
+                            placeholder="Record a brief summary..." id="synopsis"
+                            style="height: 100px; resize: none;"></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between gap-5 align-items-center checkbox-ctr px-4 py-3 mb-4">
+                        <div>
+                            <div class="fw-bold outfit-font fs-6"> Mark as Finished </div>
+                            <div class="fw-bold text-darkgrey fs-7">Setting this to on will mark progress as 100%
+                                complete.
+                            </div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" style="height: 25px; width: 50px;" type="checkbox"
+                                role="switch" id="read-switch" style="position:relative; right: -10px">
+                        </div>
+                    </div>
+
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Update Record</button>
+            <div class="modal-footer border-top-0 justify-content-center mb-3">
+                <button type="button" class="py-3 border-0 cancel-btn btn btn-secondary flex-grow-1 flex-shrink-1"
+                    style="flex-basis: 0;" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="py-3 update-record-btn btn btn-dark btn-primary flex-grow-1 flex-shrink-1"
+                    style="flex-basis: 0;">Update
+                    Record</button>
             </div>
         </div>
     </div>

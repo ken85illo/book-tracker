@@ -51,6 +51,10 @@ body {
     color: var(--color-4) !important;
 }
 
+.text-darkgrey {
+    color: darkgrey !important;
+}
+
 .text-purple {
     color: var(--color-1) !important;
 }
@@ -370,4 +374,56 @@ body {
 
         height: 30px;
     }
+}
+
+.modal-content {
+    border-radius: var(--border-radius-rem) !important;
+}
+
+.text-input {
+    background-color: #f8fafc;
+    border-radius: var(--border-radius-rem);
+    border: 0;
+}
+
+.text-input:focus {
+    background-color: #ffffff !important;
+    box-shadow: 0px 0px 3px 1px gray !important;
+
+    border: 1px solid var(--color-1);
+}
+
+.checkbox-ctr {
+    background-color: #f8fafc;
+    border-radius: var(--border-radius-rem);
+    box-shadow: 0px 0px 2px 0.5px lightgray !important;
+}
+
+.update-record-btn {
+    border-radius: var(--border-radius-rem) !important;
+    border: 0 !important;
+}
+
+.update-record-btn:hover {
+    background-color: var(--color-1) !important;
+}
+
+.update-record-btn:active {
+    background-color: hsl(243, 75%, 49%) !important;
+}
+
+.cancel-btn {
+    border-radius: var(--border-radius-rem);
+    color: #5d6a7b;
+    background-color: #f1f5f9;
+}
+
+.cancel-btn:hover {
+    color: #5d6a7b;
+    background-color: #e1e5e9;
+}
+
+.cancel-btn:active {
+    color: #5d6a7b;
+    background-color: #c1c5c9;
 }
