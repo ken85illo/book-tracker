@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --font-size-base: 1rem;
+    --border-radius-rem: 1rem;
+
+    --color-1: #4f46e5;
+    --color-2: #8b5cf6;
+    --color-3: #2563eb;
+    --color-4: #94a3b8;
+    --color-5: #059669;
+    --color-6: #d97706;
+
+    --color-3-rgb: 36, 99, 235;
+    --color-4-rgb: 148, 163, 184;
+    --color-5-rgb: 5, 150, 105;
+    --color-6-rgb: 217, 119, 6;
+    --color-1-rgb: 79, 70, 229;
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: #fcfcfd !important;
+    margin-bottom: 60px;
+    font-family: Inter !important;
+}
+
+.text-grey {
+    color: var(--color-4) !important;
+}
+
+.text-purple {
+    color: var(--color-1) !important;
+}
+
+.font-bolder {
+    font-weight: 900 !important;
+}
+
+.logo-card {
+    --size: 50px;
+    width: var(--size) !important;
+    height: var(--size) !important;
+    border-radius: var(--border-radius-rem) !important;
+}
+
+.book-card {
+    border-radius: var(--border-radius-rem) !important;
+}
+
+.nav-logo {
+    background: linear-gradient(to top right, var(--color-1), var(--color-2));
+}
+
+.inter-font {
+    font-family: Inter;
+}
+
+.outfit-font {
+    font-family: Outfit;
+}
+
+.fs-7 {
+    font-size: calc(var(--font-size-base) * 0.75);
+}
+
+.fs-8 {
+    font-size: calc(var(--font-size-base) * 0.7);
+}
+
+.search-div input {
+    border-radius: var(--border-radius-rem) !important;
+    background-color: #f5f8fb !important;
+    border: none !important;
+}
+
+.search-div input:focus {
+    background-color: #ffffff !important;
+    box-shadow: 0px 0px 3px 1px gray !important;
+}
+
+.search-div {
+    position: relative;
+}
+
+.search-div svg {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+}
+
+.search-div input:focus::placeholder {
+    color: var(--color-1);
+}
+
+.search-div:has(input:focus) svg {
+    fill: var(--color-1);
+}
+
+.add-book-div {
+    position: relative;
+}
+
+.add-book-div button,
+.info-div button {
+    border-radius: var(--border-radius-rem) !important;
+    border: 0 !important;
+}
+
+.add-book-div button:hover,
+.info-div button:hover {
+    background-color: var(--color-1) !important;
+}
+
+.add-book-div button:active,
+.info-div button:active {
+    background-color: hsl(243, 75%, 49%) !important;
+}
+
+.add-book-div svg {
+    position: absolute;
+    height: 20px;
+    top: 16px;
+    left: 14px;
+}
+
+.blue-logo {
+    background-color: rgba(var(--color-3-rgb), 0.2);
+
+    svg {
+        width: 70%;
+        path {
+            stroke: var(--color-3);
+        }
+    }
+}
+
+.info-div {
+    border-radius: var(--border-radius-rem);
+    background-color: white;
+    box-shadow: 0px 0px 2px 0.5px lightgray !important;
+}
+
+.green-logo {
+    background-color: rgba(var(--color-5-rgb), 0.2);
+
+    svg {
+        width: 70%;
+        circle {
+            stroke: var(--color-5);
+        }
+        path {
+            stroke: var(--color-5);
+        }
+    }
+}
+
+.yellow-logo {
+    background-color: rgba(var(--color-6-rgb), 0.2);
+
+    svg {
+        width: 60%;
+        polyline {
+            stroke: var(--color-6);
+        }
+    }
+}
+
+.purple-logo {
+    background-color: rgba(var(--color-1-rgb), 0.2);
+
+    svg {
+        width: 60%;
+        .cls-1 {
+            stroke: var(--color-1) !important;
+        }
+    }
+}
+
+.btn-group-wrp {
+    background-color: #f3f6fa !important;
+    border-radius: var(--border-radius-rem);
+
+    label,
+    input {
+        margin: 0px 1px !important;
+    }
+
+    .btn {
+        color: var(--color-4);
+        border: 0 !important;
+    }
+
+    .btn-check:checked + .btn-outline-primary {
+        color: black;
+        font-weight: 700;
+        background-color: white;
+        border-radius: var(--border-radius-rem);
+    }
+
+    *:focus,
+    *:focus-visible,
+    *:focus-within,
+    *:hover,
+    *:active {
+        background: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .btn-outline-primary:hover {
+        color: black;
+        font-weight: 700;
+    }
+}
+
+.shelf-empty-ctr {
+    border: 2px dashed lightgray;
+    border-radius: var(--border-radius-rem);
+
+    --color-1-brightness: 59%;
+    --color-1-hsl: hsl(243, 75%, var(--color-1-brightness));
+
+    button {
+        color: white;
+        border: 0;
+        background-color: hsl(243, 75%, 59%);
+        border-radius: var(--border-radius-rem);
+    }
+
+    button:hover {
+        background-color: hsl(243, 75%, 49%);
+    }
+    button:active {
+        background-color: hsl(243, 75%, 39%);
+    }
+}
+
+.circle-book-logo {
+    background-color: #f8fafc;
+    box-sizing: content-box !important;
+    width: 100px;
+    padding: 10px;
+}
+
+#read-checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+#read-check-ctr {
+    display: inline-block;
+    cursor: pointer;
+    --size: 3.5rem;
+
+    height: var(--size) !important;
+    width: var(--size) !important;
+
+    background-color: rgba(var(--color-4-rgb), 0.2);
+
+    svg {
+        height: 60%;
+        path {
+            stroke: var(--color-4);
+        }
+    }
+
+    #check-logo {
+        display: none;
+    }
+}
+
+#read-checkbox:hover ~ #read-check-ctr {
+    background-color: rgba(var(--color-1-rgb), 0.2);
+
+    svg path {
+        stroke: var(--color-1);
+    }
+}
+
+#read-checkbox:checked ~ #read-check-ctr {
+    background-color: rgba(var(--color-5-rgb), 0.2);
+
+    svg path {
+        fill: var(--color-5);
+        stroke: none;
+    }
+
+    #check-logo {
+        display: revert;
+    }
+
+    #clock-logo {
+        display: none;
+    }
+}
+
+.info-card-data {
+    background-color: #f8fafc;
+    border-radius: var(--border-radius-rem);
+
+    svg {
+        height: 18px;
+        path {
+            stroke: var(--color-4);
+        }
+    }
+
+    #book-logo {
+        height: 25px;
+    }
+}
+
+.info-div .progress {
+    border-radius: var(--border-radius-rem) !important;
+    font-weight: 700;
+
+    .progress-bar {
+        background-color: var(--color-1);
+    }
+}
+
+.edit-btn-ctr {
+    svg {
+        height: 25px;
+    }
+}
+
+.delete-btn-ctr {
+    button {
+        box-sizing: content-box !important;
+    }
+
+    button:hover {
+        background-color: rgba(255, 0, 0, 0.2) !important;
+    }
+
+    button:active {
+        background-color: rgba(255, 0, 0, 0.4) !important;
+    }
+
+    svg {
+        path {
+            stroke: rgb(255, 0, 0);
+        }
+
+        height: 30px;
+    }
+}
