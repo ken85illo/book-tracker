@@ -108,6 +108,8 @@ const filterBooks = () => {
           ? 'unread'
           : 'all'
 
+    let literaryWorks = 0
+
     bookCards.forEach((card) => {
         const title =
             card.querySelector('.title-display')?.innerText.toLowerCase() || ''
@@ -125,11 +127,20 @@ const filterBooks = () => {
         const matchesSearch =
             title.includes(searchText) || author.includes(searchText)
 
-        card.style.display = matchesFilter && matchesSearch ? '' : 'none'
+        if (matchesFilter && matchesSearch) {
+            card.style.display = ''
+            ++literaryWorks
+        } else {
+            card.style.display = 'none'
+        }
     })
+
+    document.querySelector('#literary-works').textContent = literaryWorks
 }
 
 ;[btnAll, btnRead, btnUnread].forEach((btn) =>
     btn.addEventListener('change', filterBooks)
 )
 searchInput.addEventListener('input', filterBooks)
+
+filterBooks()

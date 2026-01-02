@@ -145,3 +145,4 @@
 /home/kennethpabillo/projects/BookTracker/obj/Debug/net8.0/BookTracker.genruntimeconfig.cache
 /home/kennethpabillo/projects/BookTracker/obj/Debug/net8.0/ref/BookTracker.dll
 /home/kennethpabillo/projects/BookTracker/bin/Debug/net8.0/dotnet-tools.json
+/home/kennethpabillo/projects/BookTracker/obj/Debug/net8.0/BookTracker.sourcelink.json
